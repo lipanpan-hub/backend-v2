@@ -64,12 +64,6 @@ export default {
           sign: "",
         },
         {
-          name: "移动端H5",
-          value: "立春模板",
-          images: require("../../assets/images/config/h5.png"),
-          sign: "TemplateOne",
-        },
-        {
           name: "支付配置",
           value: "支付",
           images: require("../../assets/images/config/payment.png"),
@@ -152,6 +146,12 @@ export default {
           value: "插件配置",
           images: require("../../assets/images/config/import.png"),
           sign: "",
+        },
+        {
+          name: "IOS配置",
+          value: "IOS",
+          images: require("../../assets/images/config/h5.png"),
+          sign: "TemplateOne",
         },
       ],
       courses: [
@@ -275,6 +275,10 @@ export default {
       } else if (value === "视频") {
         this.$router.push({
           name: "SystemVideoSaveConfig",
+        });
+      } else if (value === "IOS") {
+        this.$router.push({
+          name: "SystemIOSConfig",
         });
       } else {
         this.$router.push({ name: "SystemConfig", query: { key: value } });

@@ -1,7 +1,9 @@
 <template>
-  <div class="meedu-main-body">
-    <back-bar class="mb-30" title="考试记录"></back-bar>
+  <div class="float-left">
     <div class="float-left j-b-flex mb-30">
+      <div class="d-flex">
+        <el-button @click="exportexcel" type="primary">导出表格</el-button>
+      </div>
       <div class="d-flex">
         <div>
           <el-input
@@ -52,19 +54,19 @@
               <span class="c-red" v-else>学员不存在</span>
             </template>
           </el-table-column>
-          <el-table-column label="分数" sortable property="get_score">
+          <el-table-column
+            label="分数"
+            sortable
+            property="get_score"
+            width="150"
+          >
             <template slot-scope="scope">
               <span v-if="scope.row.status === 1"
                 >{{ scope.row.get_score }}分</span
               >
             </template>
           </el-table-column>
-          <el-table-column
-            label="用时"
-            width="150"
-            sortable
-            property="use_seconds"
-          >
+          <el-table-column label="用时" property="use_seconds">
             <template slot-scope="scope">
               <duration-text
                 v-if="!loading"
@@ -117,17 +119,18 @@
 </template>
 
 <script>
+import moment from "moment";
 import DurationText from "@/components/duration-text";
 
 export default {
   components: {
     DurationText,
   },
+  props: ["id"],
   data() {
     return {
       pageName: "mockpaperRecord-list",
       pagination: {
-        id: this.$route.query.id,
         page: 1,
         size: 10,
         sort: "id",
@@ -158,14 +161,7 @@ export default {
       },
     };
   },
-  watch: {
-    "$route.query.id"() {
-      this.pagination.page = 1;
-      this.filter.user_id = null;
-      this.filter.status = -1;
-    },
-  },
-  activated() {
+  mounted() {
     this.getResults();
     this.$utils.scrollTopSet(this.pageName);
   },
@@ -204,15 +200,12 @@ export default {
       this.loading = true;
       this.list = [];
       let params = {};
-      this.pagination.id = this.$route.query.id;
       Object.assign(params, this.filter, this.pagination);
-      this.$api.Exam.Mockpaper.Userpaper(this.pagination.id, params).then(
-        (res) => {
-          this.loading = false;
-          this.list = res.data.data;
-          this.total = res.data.total;
-        }
-      );
+      this.$api.Exam.Mockpaper.Userpaper(this.id, params).then((res) => {
+        this.loading = false;
+        this.list = res.data.data;
+        this.total = res.data.total;
+      });
     },
     destory(item) {
       this.$confirm("确认操作？", "警告", {
@@ -240,6 +233,74 @@ export default {
         .catch(() => {
           //点击删除按钮的操作
         });
+    },
+    exportexcel() {
+      if (this.loading) {
+        return;
+      }
+      this.loading = true;
+      let params = {
+        page: 1,
+        size: this.total,
+      };
+      Object.assign(params, this.filter);
+      this.$api.Exam.Mockpaper.Userpaper(this.id, params).then((res) => {
+        if (res.data.total === 0) {
+          this.$message.error("数据为空");
+          this.loading = false;
+          return;
+        }
+        let filename = "模拟卷考试记录.xlsx";
+        let sheetName = "sheet1";
+
+        let data = [
+          ["学员ID", "学员", "手机号", "得分", "用时", "时间", "状态"],
+        ];
+        res.data.data.forEach((item) => {
+          data.push([
+            item.user_id,
+            item.user.nick_name,
+            item.user.mobile,
+            item.get_score + "分",
+            this.durationTime(item.use_seconds),
+            item.created_at
+              ? moment(item.created_at).format("YYYY-MM-DD HH:mm")
+              : "",
+            item.status_text,
+          ]);
+        });
+        let wscols = [
+          { wch: 10 },
+          { wch: 20 },
+          { wch: 15 },
+          { wch: 10 },
+          { wch: 15 },
+          { wch: 20 },
+          { wch: 10 },
+        ];
+        this.$utils.exportExcel(data, filename, sheetName, wscols);
+        this.loading = false;
+      });
+    },
+    durationTime(duration) {
+      let hour = parseInt(duration / 3600);
+      let minute = parseInt((duration - hour * 3600) / 60);
+      let second = duration - hour * 3600 - minute * 60;
+      if (hour === 0 && minute === 0 && second === 0) {
+        return null;
+      }
+      if (hour === 0) {
+        hour = "";
+      } else {
+        hour = hour + ":";
+      }
+      if (minute < 10) {
+        minute = "0" + minute;
+      }
+      if (second < 10) {
+        second = "0" + second;
+      }
+      return hour + minute + ":" + second;
     },
   },
 };

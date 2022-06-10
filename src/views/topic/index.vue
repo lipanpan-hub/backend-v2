@@ -3,7 +3,7 @@
     <div class="float-left j-b-flex mb-30">
       <div class="d-flex">
         <p-button
-          text="新建"
+          text="新建图文"
           @click="$router.push({ name: 'TopicCreate' })"
           type="primary"
           p="addons.meedu_topics.topic.store"
@@ -97,13 +97,13 @@
             </template>
           </el-table-column>
           <el-table-column
-            label="付费"
+            label="销量"
             sortable
             property="user_count"
             width="100"
           >
             <template slot-scope="scope">
-              <span>{{ scope.row.user_count }}人</span>
+              <span>{{ scope.row.user_count }}</span>
             </template>
           </el-table-column>
           <el-table-column
@@ -120,7 +120,7 @@
               scope.row.created_at | dateFormat
             }}</template>
           </el-table-column>
-          <el-table-column fixed="right" label="操作" width="140">
+          <el-table-column fixed="right" label="操作" width="160">
             <template slot-scope="scope">
               <p-link
                 text="学员"

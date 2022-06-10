@@ -3,7 +3,7 @@
     <div class="float-left j-b-flex mb-30">
       <div class="d-flex">
         <p-button
-          text="新建"
+          text="新建学习路径"
           p="addons.learnPaths.path.store"
           @click="$router.push({ name: 'LearningPathCreate' })"
           type="primary"
@@ -84,7 +84,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column fixed="right" label="操作" width="140">
+          <el-table-column fixed="right" label="操作" width="160">
             <template slot-scope="scope">
               <p-link
                 text="步骤"

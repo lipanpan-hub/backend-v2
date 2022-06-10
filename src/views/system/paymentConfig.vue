@@ -70,7 +70,7 @@
             </div>
           </div>
         </el-form-item>
-        <el-form-item :key="54" label="微信支付公众号AppI">
+        <el-form-item :key="54" label="微信支付公众号AppId">
           <div class="j-flex flex-column" style="margin-left: 3px">
             <div>
               <el-input
@@ -202,6 +202,7 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 import QuillEditor from "@/components/quill-editor";
 export default {
   components: { QuillEditor },
@@ -233,6 +234,9 @@ export default {
         loading: false,
       },
     };
+  },
+  computed: {
+    ...mapState(["enabledAddons"]),
   },
   mounted() {
     this.getConfig();

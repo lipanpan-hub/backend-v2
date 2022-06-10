@@ -191,7 +191,7 @@
       <p class="info">
         <span>PHP{{ systemInfo.php_version }} </span>
         <span class="mx-10">主程序{{ systemInfo.meedu_version }}</span>
-        <span>后管v4.6.2</span>
+        <span>后管v4.6.3</span>
       </p>
     </div>
   </div>
@@ -272,6 +272,7 @@ export default {
     },
   },
   mounted() {
+    document.title = "MeEdu后台管理";
     this.getStatData();
     this.fun_date(-7);
     this.getZXTdata();

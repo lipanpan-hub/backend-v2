@@ -31,6 +31,7 @@
                       :key="index"
                       :src="img"
                       :preview-src-list="item.thumbs"
+                      fit="contain"
                       style="width: 70px; height: 70px"
                     ></el-image>
                   </template>
@@ -200,6 +201,10 @@ export default {
     },
     confirm() {
       if (this.loading) {
+        return;
+      }
+      if (this.score.length === 0) {
+        this.$message.error("请打分后再提交");
         return;
       }
       this.loading = true;

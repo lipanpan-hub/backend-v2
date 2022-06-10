@@ -10,8 +10,8 @@
 
     <div class="float-left">
       <el-tabs v-model="tab">
-        <el-tab-pane label="功能模块" name="repository"></el-tab-pane>
         <el-tab-pane label="本地已安装" name="local"></el-tab-pane>
+        <el-tab-pane label="功能模块" name="repository"></el-tab-pane>
       </el-tabs>
     </div>
 
@@ -120,7 +120,7 @@
 export default {
   data() {
     return {
-      tab: "repository",
+      tab: "local",
       repositories: [],
       localList: [],
       loading: false,
@@ -256,7 +256,7 @@ export default {
           this.$message.success(this.$t("common.success"));
 
           // 重新加载数据
-          this.getLocal();
+          location.reload();
         })
         .catch((e) => {
           this.loading = false;

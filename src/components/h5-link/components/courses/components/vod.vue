@@ -2,15 +2,13 @@
   <div class="float-left" v-loading="loading">
     <div class="float-left mb-15">
       <div class="float-left d-flex">
-        <div class="flex-1"></div>
-        <div class="d-flex">
+        <div class="d-flex" style="margin-left: 345px">
           <el-input
             class="w-200px"
             v-model="pagination.keywords"
             placeholder="关键字"
           ></el-input>
         </div>
-
         <div class="ml-15">
           <el-button @click="firstPageLoad" type="primary">筛选</el-button>
           <el-button class="ml-15" @click="paginationReset">清空</el-button>
@@ -18,11 +16,19 @@
       </div>
     </div>
     <el-table
+      :header-cell-style="{ background: '#f1f2f9' }"
       :data="courses"
       highlight-current-row
       @current-change="tableItemChoice"
       class="float-left"
     >
+      <el-table-column label width="55">
+        <template slot-scope="scope">
+          <el-radio :label="scope.row.id" v-model="radio"
+            ><span></span
+          ></el-radio>
+        </template>
+      </el-table-column>
       <el-table-column prop="id" label="课程ID" width="120"> </el-table-column>
       <el-table-column label="课程">
         <template slot-scope="scope">
@@ -69,6 +75,7 @@ export default {
       loading: false,
       total: 0,
       courses: [],
+      radio: "",
     };
   },
   computed: {
@@ -111,6 +118,7 @@ export default {
         } else {
           this.link = "/pages/course/show?id=" + row.id;
         }
+        this.radio = row.id;
       }
     },
     getCourse() {

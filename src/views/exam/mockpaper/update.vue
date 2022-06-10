@@ -54,7 +54,7 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item label="仅邀请" prop="is_invite">
+        <el-form-item label="仅添加学员" prop="is_invite">
           <div class="d-flex">
             <div>
               <el-switch
@@ -66,7 +66,7 @@
             </div>
             <div class="ml-10">
               <helper-text
-                text="开启仅邀请的话，只有后台添加的用户可以参与考试"
+                text="开启仅添加学员的话，只有后台添加的用户可以参与考试"
               ></helper-text>
             </div>
           </div>
@@ -185,6 +185,23 @@
               </div>
             </div>
           </el-form-item>
+          <el-form-item label="判断题数量">
+            <div class="d-flex">
+              <div>
+                <el-input
+                  type="number"
+                  v-model="addform.rule.num.judge"
+                  class="w-200px"
+                ></el-input>
+              </div>
+              <div class="ml-10">
+                <div>（共{{ countMap[5] }}题）</div>
+              </div>
+              <div class="ml-10">
+                <helper-text text="每次考试抽出的判断题数量"></helper-text>
+              </div>
+            </div>
+          </el-form-item>
           <el-form-item label="填空题数量">
             <div class="d-flex">
               <div>
@@ -216,23 +233,6 @@
               </div>
               <div class="ml-10">
                 <helper-text text="每次考试抽出的问答题数量"></helper-text>
-              </div>
-            </div>
-          </el-form-item>
-          <el-form-item label="判断题数量">
-            <div class="d-flex">
-              <div>
-                <el-input
-                  type="number"
-                  v-model="addform.rule.num.judge"
-                  class="w-200px"
-                ></el-input>
-              </div>
-              <div class="ml-10">
-                <div>（共{{ countMap[5] }}题）</div>
-              </div>
-              <div class="ml-10">
-                <helper-text text="每次考试抽出的判断题数量"></helper-text>
               </div>
             </div>
           </el-form-item>

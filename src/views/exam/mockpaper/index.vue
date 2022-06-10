@@ -3,7 +3,7 @@
     <div class="float-left j-b-flex mb-30">
       <div class="d-flex">
         <p-button
-          text="新建"
+          text="新建模拟卷"
           p="addons.Paper.mock_paper.store"
           @click="$router.push({ name: 'ExamMockpaperCreate' })"
           type="primary"
@@ -68,15 +68,19 @@
           </el-table-column>
           <el-table-column label="时长">
             <template slot-scope="scope">
-              <span>{{ scope.row.expired_minutes }}分钟</span>
+              <span>{{ scope.row.expired_minutes }}m</span>
             </template>
           </el-table-column>
-          <el-table-column fixed="right" label="操作" width="140">
+          <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
               <p-link
                 text="学员"
-                p="addons.Paper.mock_paper.users"
                 type="primary"
+                :p-box="[
+                  'addons.Paper.mock_paper.records',
+                  'addons.Paper.mock_paper.statistics',
+                  'addons.Paper.mock_paper.users',
+                ]"
                 @click="
                   $router.push({
                     name: 'MockpaperUser',
@@ -84,19 +88,6 @@
                   })
                 "
               ></p-link>
-              <p-link
-                text="统计"
-                class="ml-5"
-                p="addons.Paper.mock_paper.statistics"
-                type="primary"
-                @click="
-                  $router.push({
-                    name: 'ExamMockpaperStat',
-                    query: { id: scope.row.id },
-                  })
-                "
-              >
-              </p-link>
               <el-dropdown>
                 <el-link type="primary" class="el-dropdown-link ml-5">
                   更多<i class="el-icon-arrow-down el-icon--right"></i>
@@ -109,18 +100,6 @@
                     @click="
                       $router.push({
                         name: 'ExamMockpaperUpdate',
-                        query: { id: scope.row.id },
-                      })
-                    "
-                  ></p-dropdown-item>
-
-                  <p-dropdown-item
-                    text="考试记录"
-                    p="addons.Paper.mock_paper.records"
-                    type="primary"
-                    @click="
-                      $router.push({
-                        name: 'ExamMockpaperUserpaper',
                         query: { id: scope.row.id },
                       })
                     "

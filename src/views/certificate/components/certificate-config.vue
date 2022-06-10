@@ -146,7 +146,7 @@
     </div>
     <div class="config" v-else-if="block.sign === 'qrcode-v1'">
       <div class="title">
-        <div class="text">二维码</div>
+        <div class="text">证书二维码</div>
       </div>
       <div class="config-item" v-if="block.config">
         <div class="config-item-body">
@@ -175,7 +175,7 @@
             </div>
           </div>
         </div>
-        <div class="config-item-body">
+        <!--<div class="config-item-body">
           <div class="float-left">
             <div class="w-100 form-label mb-15">网址</div>
             <div class="w-100 float-left import-box">
@@ -214,7 +214,7 @@
               ></helper-text>
             </div>
           </div>
-        </div>
+        </div>-->
       </div>
     </div>
     <select-image
